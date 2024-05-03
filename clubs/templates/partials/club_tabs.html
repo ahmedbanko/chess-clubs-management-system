@@ -1,0 +1,10 @@
+<nav class="nav nav-pills nav-fill">
+    <div class="btn-group mx-auto">
+        <a class="btn btn-primary" href="{% url 'club_home' club_id %}"><i class="fas fa-home me-1"></i>Home</a>
+        <a class="btn btn-primary" href="{% url 'members_list'  club_id %}"><i class="fas fa-users me-1"></i>Members</a>
+        {% if logged_in_user_is_officer or  logged_in_user_is_owner %}
+            <a class="btn btn-primary" href="{% url 'club_application_list' club_id %}"><i
+                    class="fas fa-list-ul me-1"></i>Applications</a>
+        {% endif %}
+    </div>
+</nav>

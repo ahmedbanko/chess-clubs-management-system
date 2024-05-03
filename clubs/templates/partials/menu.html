@@ -1,0 +1,38 @@
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        {% if user.is_member or user.is_officer or user.is_owner %}
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="my-clubs-dropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="fas fa-bookmark me-1"></i> My clubs
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="my-clubs-dropdown">
+                    {% for club in request.user.clubs %}
+                        <li><a class="dropdown-item" href="{% url 'club_home' club.id %}">{{ club.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}"><i class="fas fa-search me-1"></i> Browse Clubs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'user_matches' %}"><i class="fas fa-chess-pawn me-1"></i></i> My
+                matches</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'applications' %}"><i class="fas fa-book me-1"></i> My Applications</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="user-account-dropdown" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+                <i class="fas fa-user-cog me-1"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-account-dropdown">
+                <li><a class="dropdown-item" href="{% url 'profile' %}">Edit profile</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="{% url 'log_out' %}">Log out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,36 @@
+<div class="card club-card shadow-sm" id="club-card">
+    <h5 class="card-header" id="club-name">{{ club.name }}
+        {% if member_of or club_id %}
+            {% include 'partials/club_dropbox.html' %}
+        {% endif %}
+    </h5>
+    <div class="card-body">
+        <h5 class="card-title">
+            <img src="{{ club.get_owner.mini_gravatar }}" alt="Gravatar of {{ club.get_owner.username }}"
+                 class="rounded-circle">
+            <span class="ms-3 ps-3 profile-text border-start "> Owner:  {{ club.get_owner.full_name }} </span>
+        </h5>
+        <p class="card-text">{{ club.get_owner.bio }}</p>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            {% if club.description|length >= 100 %}
+                {{ club.description|truncatechars:100 }}
+                {% include 'partials/club_description_modal.html' with club=club %}
+            {% else %}
+                {{ club.description }}
+            {% endif %}
+        </p>
+        <h6 class="card-subtitle text-muted">{{ club.location }}</h6>
+    </div>
+    <div class="card-body">
+        {% if member_of %}
+            <a href="{% url 'club_home' club.id %}" class="btn btn-primary">View</a>
+        {% else %}
+            <a href="{% url 'application' club.id %}" class="btn btn-primary">Apply</a>
+        {% endif %}
+    </div>
+    <div class="card-footer text-muted">
+        Members: {{ club.get_member_count }}
+    </div>
+</div>

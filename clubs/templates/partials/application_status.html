@@ -1,0 +1,7 @@
+{% if application.is_pending %}
+    <b class="text-primary application-status">{{ application.status }}</b>
+{% elif application.is_accepted %}
+    <b class="text-success application-status">{{ application.status }}</b>
+{% else %}
+    <b class="text-danger application-status">{{ application.status }}</b>
+{% endif %}

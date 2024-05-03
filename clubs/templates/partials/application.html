@@ -1,0 +1,29 @@
+<div class="row content">
+    <div class="col-12">
+        <div class="profile-text">
+            <h4 class="profile-title">
+                <img src="{{ application.user.mini_gravatar }}" alt="Gravatar of {{ application.user.full_name }}"
+                     class="rounded-circle profile-image">
+                {{ application.user.full_name }}
+            </h4>
+            <p class="profile-username application-username">
+                <i>{{ application.user.username }}</i>
+            </p>
+        </div>
+        <div>
+            <p style="float: left;" class="application-club-name">
+                <br>
+                <b><i>{{ application.club.name }}</i></b>
+            </p>
+            <p class="application-time-stamp">
+                {{ application.created_at }}<br>
+                {% include 'partials/application_status.html' %}
+            </p>
+        </div>
+    </div>
+</div>
+<hr>
+<p>
+    {{ application.personal_statement }}
+</p>
+<hr>

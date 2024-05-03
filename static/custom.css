@@ -1,0 +1,147 @@
+/*
+ * Cover page
+ */
+
+body {
+    min-height: 100vh;
+}
+
+.content {
+    padding-top: 10px;
+}
+
+#club-dropdown {
+    text-decoration: none;
+    position: absolute;
+}
+
+#cover-image {
+    background: url("images/cover.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.h-100 {
+    min-height: 100vh;
+    height: 100vh;
+}
+
+.vcenter-item {
+    display: flex;
+    align-items: center;
+}
+
+
+/*
+ * Cover page
+ */
+h1.cover-heading {
+    font-size: 4rem;
+}
+
+.club-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+}
+
+@media screen and (max-width: 992px) {
+    .club-grid {
+        grid-template-columns: 1fr;
+
+    }
+}
+
+/* .club-card {
+  width: 250px;
+} */
+
+p.cover-text {
+    font-size: 1.2rem;
+}
+
+.cover-card {
+    background: linear-gradient(
+            101.96deg,
+            rgba(245, 245, 245, 0.41) -0.52%,
+            rgba(245, 245, 245, 0.575668) 88.4%,
+            rgba(245, 245, 245, 0.38) 100.25%
+    );
+    max-width: 30rem;
+    padding-top: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+    border-radius: 5%;
+}
+
+.cover-card-block {
+    opacity: 1;
+}
+
+.application-status {
+    font-size: 1rem;
+}
+
+.application-club-name {
+    font-size: 16px;
+    text-align: left;
+    color: black;
+}
+
+.application-time-stamp {
+    font-size: 11px;
+    text-align: right;
+    color: gray;
+    float: inline-end;
+}
+
+.application-username {
+    font-size: 11px;
+    color: gray;
+}
+
+#players {
+    position: relative;
+}
+
+.versus {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.match-card {
+    position: relative;
+}
+
+.squish {
+    max-width: 80%;
+}
+
+.cancelled {
+    position: relative;
+}
+
+.cancelled::after {
+    position: absolute;
+    content: '';
+    width: 200%;
+    height: 3px;
+    background-color: red;
+    top: 50%;
+    left: -50%;
+    transform: rotate(-25deg);
+}
+
+.cancel-match-btn {
+    color:red;
+    float:right;
+    padding: 0px 0px;
+}
+
+.cancel-match-btn:hover {
+    color:rgb(206, 1, 1);
+}

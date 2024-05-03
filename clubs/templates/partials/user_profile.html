@@ -1,0 +1,20 @@
+<div class="row content">
+    <div class="d-flex justify-content-start col-10 align-items-center">
+        <img src="{{ user.gravatar }}" alt="Gravatar of {{ user.full_name }}" class="rounded-circle profile-image">
+        <div class="ms-3 ps-3 profile-text border-start ">
+            <h3 class="profile-title">{{ user.full_name }}</h3>
+            <p class="profile-username text-secondary ms-1"><b><i>{{ user.username }}</i></b></p>
+        </div>
+    </div>
+</div>
+<div class="row content">
+    <div class="col-12">
+        <p class="profile-bio"><u>Bio:</u><br>{{ user.bio }}</p>
+        {% if logged_in_user_is_officer or logged_in_user_is_owner %}
+            <p class="email"><u>Email:</u><br>{{ user.email }} </p>
+            <p class="experience"><u>Experience:</u><br>{{ user.experience_level }} </p>
+            <p class="personal_statement"><u>Statement:</u><br>{{ personal_statement }} </p>
+        {% endif %}
+    </div>
+</div>
+  

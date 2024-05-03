@@ -1,0 +1,32 @@
+[
+    {
+        "model": "clubs.club",
+        "pk": 2,
+        "fields": {
+            "name": "PolecatChess_2",
+            "location": "London",
+            "description": "Welcome to Polecat chess club 2!"
+        }
+    },
+
+    {
+        "model": "clubs.club",
+        "pk": 3,
+        "fields": {
+            "name": "PolecatChess_3",
+            "location": "Berlin",
+            "description": "Welcome to Polecat chess club 3!"
+        }
+    },
+
+    {
+        "model": "clubs.club",
+        "pk": 4,
+        "fields": {
+            "name": "PolecatChess_4",
+            "location": "Paris",
+            "description": "Welcome to Polecat chess club 4!"
+        }
+    }
+]
+  

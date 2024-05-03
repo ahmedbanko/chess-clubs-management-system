@@ -1,0 +1,13 @@
+{% extends 'base_content.html' %}
+{% block content %}
+    <h2>Edit profile</h2>
+    <form action="{% url 'profile' %}" method="post">
+        {% csrf_token %}
+        {% include 'partials/bootstrap_form.html' with form=form %}
+        <input type="submit" value="Update" class="btn btn-primary">
+    </form>
+    <hr>
+    <a class="text-primary" href="{% url 'password' %}">Change password</a>
+    <br>
+    <a class="text-danger" href="{% url 'close_account' %}">Close account</a>
+{% endblock %}

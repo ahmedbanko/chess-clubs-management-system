@@ -1,0 +1,10 @@
+{% extends 'base_content.html' %}
+{% block content %}
+    <h1>Update Match</h1>
+    {% include 'partials/match.html' with match=match %}
+    <form action="{% url 'update_match' club_id match.id %}" method="post">
+        {% csrf_token %}
+        {% include 'partials/bootstrap_form.html' with form=form %}
+        <input type="submit" value="Update match" class="btn btn-primary">
+    </form>
+{% endblock %}

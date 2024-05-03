@@ -1,0 +1,5 @@
+{% for application in applications %}
+    <div class="list-group">
+    {% include 'partials/club_application.html' with application=application %}
+{% endfor %}
+</div>

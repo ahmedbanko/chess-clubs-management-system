@@ -1,0 +1,13 @@
+{% extends 'base_content.html' %}
+{% block content %}
+    <h2>Log in</h2>
+    <form action="{% url 'log_in' %}" method="post" class="mb-1">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {% include 'partials/bootstrap_form.html' with form=form %}
+        <input type="submit" value="Log in" class="btn btn-primary">
+    </form>
+    Don't have an account yet? <a class="text-info" href="{% url 'sign_up' %}">Sign up</a>
+    <br>
+    <a class="text-info" href="{% url 'password_reset' %}">Forgot password?</a>
+{% endblock %}

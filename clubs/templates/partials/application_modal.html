@@ -1,0 +1,33 @@
+{% load humanize %}
+<a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#application-{{ application.id }}"
+   class="list-group-item list-group-item-action">
+    {{ application.club.name }}
+    <div style="float: right;">{% include 'partials/application_status.html' %}</div>
+</a>
+
+<!-- Modal -->
+<div class="modal fade" id="application-{{ application.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{ application.user }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'partials/application.html' %}
+            </div>
+            <div class="modal-footer">
+                <form action="{% url 'cancel_application' application.id %}" method="GET">
+                    {% csrf_token %}
+                    {% if application.is_pending %}
+                        <button type="submit"
+                                onclick="return confirm('Are you sure you want to cancel this application?')"
+                                class="btn btn-danger" style="float: right;"> Cancel <span class="bi-x-circle"></span>
+                        </button><br><br>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

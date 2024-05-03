@@ -1,0 +1,12 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="card p-2 shadow-sm mb-3">
+    {% include 'partials/profile_dropbox.html' with user=user personal_statement=personal_statement %}
+      <div class="ps-3">
+        {% include 'partials/user_profile.html' with user=user personal_statement=personal_statement %}
+      </div>
+  </div>
+  {% include 'partials/match_history.html' %}
+</div>
+{% endblock %}

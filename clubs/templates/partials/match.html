@@ -1,0 +1,76 @@
+<div class="match" id="{{ match.player_1.full_name }},{{ match.player_2.full_name }}">
+    <div class="card club-card shadow-sm mt-2 match-card mx-auto">
+        <div class="card-body">
+            <h5 class="card-title">
+                <div class="card-body fw-bold d-flex justify-content-between" id="players">
+                    <div>
+                        <div class="d-flex flex-column align-items-center">
+                            <span id="player1" class="mb-2">{{ match.player_1.full_name }}</span>
+                            {% if match.is_player_1_win %}
+                                <i class="fas fa-trophy text-warning fa-lg"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column align-items-center versus">
+
+                        <div>
+                            {% if match.is_draw %}
+                                <i class="far fa-handshake fa-lg"></i>
+                            {% elif not match.is_cancelled %}
+                                <i class="fas fa-chess-queen fa-lg"></i>
+                            {% endif %}
+                        </div>
+                        {% if match.is_draw %}
+                            <span>draw</span>
+                        {% elif match.is_cancelled %}
+                            <div>
+                                <i class="fas fa-chess-queen fa-lg cancelled"></i>
+                            </div>
+                            <small class="mt-1">cancelled</small>
+                        {% else %}
+                            <span>vs</span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <div class="d-flex flex-column align-items-center">
+                            <span id="player2" class="mb-2">{{ match.player_2.full_name }}</span>
+                            {% if match.is_player_2_win %}
+                                <i class="fas fa-trophy text-warning fa-lg"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </h5>
+        </div>
+        <div class="card-footer text-muted">
+            Location: {{ match.location }} |
+            Date: {{ match.date_time }}
+            {% if not request.user == match.player_1 and not request.user == match.player_2 %}
+                {% if logged_in_user_is_officer or logged_in_user_is_owner %}
+                    {% if match.is_pending and match.is_overdue %}
+                        <a href="{% url 'update_match' match.club.id match.id %}">
+                            <i class="fas fa-pen" style="float:right"></i>
+                        </a>
+                    {% elif match.is_pending and not match.is_overdue %}
+                        <form style="display: inline;" action="{% url 'cancel_match' match.club.id match.id %}"
+                              method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-danger-outline cancel-match-btn" type="submit"
+                                    onclick="return confirm('Are you sure you want to cancel this match?')">
+                                <i class="bi bi-x-circle"></i>
+                            </button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if request.user == match.player_1 or request.user == match.player_2 %}
+                {% if match.status == "Pending" %}
+                    <a class="forfeit-match-btn" href="{% url 'forfeit_match' match.club.id match.id %}"
+                       onclick="return confirm('Are you sure you want to forfeit this match?')">
+                        <i class="far fa-flag" style="float:right"></i>
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>

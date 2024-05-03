@@ -1,0 +1,9 @@
+{% extends 'club_templates/club_content.html' %}
+{% block club_content %}
+    <h2>Pending Applications</h2>
+    {% if applications %}
+        {% include 'partials/club_applications.html' with applications=applications %}
+    {% else %}
+        <p class="text-info lead info-message">There are currently no pending applications!</p>
+    {% endif %}
+{% endblock %}

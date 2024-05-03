@@ -1,0 +1,44 @@
+{% if not shown_user_is_owner and not request.user == user %}
+    {% if logged_in_user_is_officer and not shown_user_is_officer or logged_in_user_is_owner %}
+        <div class="d-flex justify-content-end">
+            <a class="d-flex justify-content-end pt-1 pe-1" href="#" id="user-account-dropdown" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-ellipsis-v text-info"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="user-account-dropdown">
+                {% if logged_in_user_is_owner %}
+                    <li>
+                        <form action="{% url 'transfer_ownership' club_id user.id %}" method="GET">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item">Transfer ownership</button>
+                        </form>
+                    </li>
+                {% endif %}
+                {% if shown_user_is_member %}
+                    <li>
+                        <form action="{% url 'promote_member' club_id user.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item">Promote member</button>
+                        </form>
+                    </li>
+                {% endif %}
+                {% if shown_user_is_officer and logged_in_user_is_owner %}
+                    <li>
+                        <form action="{% url 'demote_officer' club_id user.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item">Demote officer</button>
+                        </form>
+                    </li>
+                {% endif %}
+                {% if logged_in_user_is_owner or logged_in_user_is_officer and shown_user_is_member %}
+                    <li>
+                        <form action="{% url 'delete_member' club_id user.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item">Delete member</button>
+                        </form>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+{% endif %}

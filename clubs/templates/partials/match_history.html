@@ -1,0 +1,95 @@
+<input type="search" id="search-input" class="form-control m-2" placeholder="Find a match"/>
+<p class="text-danger" id="message" hidden>No match for the entered name!</p>
+
+<div class="text-center mt-3">
+    <div id="upcoming-matches">
+        <h2>Upcoming Matches</h2>
+        {% if upcoming_matches %}
+            {% include 'partials/club_match_list.html' with matches=upcoming_matches %}
+        {% else %}
+            <p class="text-info lead info-message">You are not in any scheduled matches yet!</p>
+        {% endif %}
+    </div>
+    <hr id="divider"/>
+    <div id="history">
+        <h2>History</h2>
+        <div class="d-flex mb-2 text-center justify-content-center">
+            <span class="text-muted border-end px-2"> Wins: {{ wins }} </span>
+            <span class="text-muted border-end px-2"> Draws: {{ draws }} </span>
+            <span class="text-muted px-2"> Losses: {{ losses }} </span>
+        </div>
+    </div>
+    <div id="previous-matches">
+        {% if previous_matches %}
+            {% include 'partials/club_match_list.html' with matches=previous_matches %}
+        {% else %}
+            <p class="text-info lead info-message">There are no previous matches!</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById('search-input');
+    const message = document.getElementById('message');
+    const divider = document.getElementById('divider');
+    const historyData = document.getElementById('history');
+    const upcoming = document.getElementById('upcoming-matches');
+    const previous = document.getElementById('previous-matches');
+    var listRows = document.getElementsByClassName("match")
+    var foundUpcoming = false;
+    var foundPrevious = false;
+    if (listRows.length == 0) {
+        searchInput.disabled = true;
+    }
+    // Action taken when search input changes.
+    searchInput.addEventListener('input', (e) => {
+        reloadTable(e);
+        const inputValue = searchInput.value.toLowerCase();
+        for (row of listRows) {
+            const players = row.id.toLowerCase().split(",");
+            var player_1_name = players[0]
+            var player_2_name = players[1]
+            if (!player_1_name.startsWith(inputValue) && !player_2_name.startsWith(inputValue)) {
+                row.hidden = true;
+            } else {
+                if (row.parentNode.id == upcoming.id) {
+                    foundUpcoming = true;
+                }
+                if (row.parentNode.id == previous.id) {
+                    foundPrevious = true;
+                }
+            }
+        }
+        if (!foundUpcoming && !foundPrevious) {
+            message.hidden = false;
+            upcoming.hidden = true;
+            previous.hidden = true;
+            historyData.hidden = true;
+            divider.hidden = true;
+        } else if (!foundUpcoming && foundPrevious) {
+            message.hidden = true;
+            upcoming.hidden = true;
+            divider.hidden = true;
+        } else if (foundUpcoming && !foundPrevious) {
+            message.hidden = true;
+            previous.hidden = true;
+            historyData.hidden = true;
+            divider.hidden = true;
+        } else {
+            message.hidden = true;
+        }
+    });
+
+    function reloadTable(e) {
+        foundUpcoming = e.target.value == '';
+        foundPrevious = e.target.value == '';
+        upcoming.hidden = false;
+        historyData.hidden = false;
+        previous.hidden = false;
+        divider.hidden = false;
+        message.hidden = true;
+        for (row of listRows) {
+            row.hidden = false;
+        }
+    }
+</script>

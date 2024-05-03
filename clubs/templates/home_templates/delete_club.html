@@ -1,0 +1,18 @@
+{% extends 'base_content.html' %}
+{% block content %}
+    <h2>Delete club</h2>
+    <p>Hi <b>{{ user.full_name }}</b>,</p>
+    <p style="overflow-wrap: break-word;">Are you sure you want to delete your {{ club.name }} club?</p>
+    <hr>
+    <p> Your club will be deleted <b>permanently</b>.
+        <br> Once you delete your club, you will no longer be able to access any of the club infortmation. <br>
+        All {{ club.get_member_count }} current members of the club will be notified of its deletion via email.
+    <hr>
+    <form action="{% url 'delete_club' club.id %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {% include 'partials/bootstrap_form.html' with form=form %}
+        <input style='float: right;' type="submit" onclick="return confirm('Are you sure you want to delete the club?')"
+               value="Delete club" class="btn btn-danger">
+    </form>
+{% endblock %}

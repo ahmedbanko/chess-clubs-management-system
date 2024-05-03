@@ -1,0 +1,11 @@
+{% extends 'base_content.html' %}
+{% block content %}
+    <h2>Applications</h2>
+    {% if applications %}
+        {% include 'partials/application_modals.html' with applications=applications %}
+    {% else %}
+        <p class="text-info lead info-message">You don't have any applications at the moment.</p>
+    {% endif %}
+    <br>
+    <a href="{% url 'application' %}" class="btn btn-primary">Submit Application</a>
+{% endblock %}  

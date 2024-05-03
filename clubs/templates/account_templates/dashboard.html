@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% include 'partials/navbar.html' %}
+    <div class="container my-3">
+    <div class="row">
+    <div class="col-sm-12 col-md-10 offset-md-1">
+    {% include 'partials/messages.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 ">
+                <input type="search" id="search-input" class="form-control m-2 mb-3" placeholder="Find a club"/>
+                <p class="text-danger lead" id="message" hidden>There are no clubs with that name!</p>
+                <a href="{% url 'create_club' %}" class="btn btn-primary" style="float: right;"><i
+                        class="fas fa-plus me-2"></i>Create club</a>
+                <h2 id="my-clubs-label">My Clubs</h2>
+                <div class="club-grid" id="my-clubs-grid">
+                    {% if my_clubs %}
+                        {% for club in my_clubs %}
+                            {% include 'partials/club_list.html' with club=club member_of=True %}
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-info lead info-message">You are not in any clubs yet!</p>
+                    {% endif %}
+                </div>
+                <hr id="divider"/>
+                <h2 id="other-clubs-label">Other Clubs</h2>
+                <div class="club-grid" id="other-clubs-grid">
+                    {% if clubs %}
+                        {% for club in clubs %}
+                            {% include 'partials/club_list.html' with club=club member_of=False %}
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-info lead info-message">There are no other clubs!</p>
+                    {% endif %}
+                </div>
+                <table class="table table-hover">
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const myClubsLabel = document.getElementById('my-clubs-label');
+        const otherClubsLabel = document.getElementById('other-clubs-label');
+        const divider = document.getElementById('divider');
+        const message = document.getElementById('message');
+        var allCards = document.getElementsByClassName("card club-card");
+        var infoMessages = document.querySelectorAll(".info-message");
+        var foundInMyClubs = false;
+        var foundInOtherClubs = false;
+        if (allCards.length == 0) {
+            searchInput.disabled = true;
+        }
+
+        // Action taken when search input changes.
+        searchInput.addEventListener('input', (e) => {
+            showAllCards();
+            updateDisplay(e);
+            const inputValue = searchInput.value.toLowerCase();
+            for (card of allCards) {
+                var cardData = card.getElementsByClassName("card-header");
+                for (header of cardData) {
+                    var id = header.id
+                    var club_name = header.textContent.toLowerCase();
+                    if (id == 'club-name' && !club_name.startsWith(inputValue)) {
+                        card.hidden = true;
+                    } else if (id == 'club-name' && club_name.startsWith(inputValue)) {
+                        if (card.parentElement.id == "my-clubs-grid") {
+                            foundInMyClubs = true;
+                        } else if (card.parentElement.id == "other-clubs-grid") {
+                            foundInOtherClubs = true;
+                        }
+                    }
+                }
+                ;
+            }
+            if (!foundInMyClubs && !foundInOtherClubs) {
+                message.hidden = false;
+                divider.hidden = true;
+                infoMessages.forEach(infoMessage => infoMessage.hidden = true)
+                otherClubsLabel.hidden = true;
+                myClubsLabel.hidden = true;
+            } else if (foundInMyClubs && !foundInOtherClubs) {
+                divider.hidden = true;
+                infoMessages.forEach(infoMessage => infoMessage.hidden = true)
+                otherClubsLabel.hidden = true;
+            } else if (!foundInMyClubs && foundInOtherClubs) {
+                divider.hidden = true;
+                infoMessages.forEach(infoMessage => infoMessage.hidden = true)
+                myClubsLabel.hidden = true;
+            } else {
+                message.hidden = true;
+            }
+        });
+
+        function updateDisplay(e) {
+            foundInMyClubs = e.target.value == '';
+            foundInOtherClubs = e.target.value == '';
+            message.hidden = true;
+            divider.hidden = false;
+            myClubsLabel.hidden = false;
+            otherClubsLabel.hidden = false;
+            infoMessages.forEach(infoMessage => infoMessage.hidden = false)
+
+        }
+
+        function showAllCards() {
+            for (card of allCards) {
+                card.hidden = false;
+            }
+        }
+    </script>
+{% endblock %}
+</div>
+</div>
+</div>

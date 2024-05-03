@@ -1,0 +1,41 @@
+{% extends 'base_content.html' %}
+{% block content %}
+    <h2>Create new Match</h2>
+    <form action="{% url 'create_match' club_id %}" method="post">
+        {% csrf_token %}
+        {% include 'partials/bootstrap_form.html' with form=form %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <script>
+        var player1list = document.getElementById("id_player_1");
+        var player2list = document.getElementById("id_player_2");
+        player1list.addEventListener("change", () => {
+            reloadOptions(player1list);
+            reloadOptions(player2list);
+            var selectedVal = player1list.options[player1list.selectedIndex].value
+            for (option of player2list.options) {
+                if (option.value == selectedVal) {
+                    option.disabled = true;
+                }
+            }
+        });
+
+        player2list.addEventListener('change', () => {
+            reloadOptions(player1list);
+            reloadOptions(player2list);
+            var selectedVal = player2list.options[player2list.selectedIndex].value
+            for (option of player1list.options) {
+                if (option.value == selectedVal) {
+                    option.disabled = true;
+                }
+            }
+        });
+
+        function reloadOptions(combobox) {
+            for (option of combobox.options) {
+                option.disabled = false;
+            }
+        }
+    </script>
+
+{% endblock %}

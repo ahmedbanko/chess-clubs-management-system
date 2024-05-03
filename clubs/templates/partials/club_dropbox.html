@@ -1,0 +1,21 @@
+<div style="float: right;">
+    <a class="d-flex justify-content-end pt-1 pe-1" href="#" id="club-dropdown" role="button"
+       data-bs-toggle="dropdown" aria-expanded="false">
+        {% if display_big %}
+            <i class="fas fa-cogs fa-lg text-info"></i>
+        {% else %}
+            <i class="fas fa-ellipsis-v text-info"></i>
+        {% endif %}
+    </a>
+    <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="club-dropdown">
+        {% if club in owned_clubs %}
+            <li>
+                <a class="dropdown-item" href="{% url 'delete_club' club.id %}">Delete club</a>
+            </li>
+        {% else %}
+            <li>
+                <a class="dropdown-item" href="{% url 'leave_club' club.id %}">Leave club</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

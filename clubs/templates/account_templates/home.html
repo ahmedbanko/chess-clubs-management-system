@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div id="cover-image">
+        <div class="container vh-100">
+            <div class="row h-100">
+                <div class="col-12 my-auto">
+                    <div class="card cover-card shadow-lg mx-auto   ">
+                        <h1 class="cover-heading">Polecat Chess</h1>
+                        <p class="cover-text">Join a chess club today!</p>
+                        <p>
+                            <a href="{% url 'sign_up' %}" class="btn btn-primary">Sign Up</a>
+                        </p>
+                        <p>
+                            <a href="{% url 'log_in' %}" class="btn btn-primary">Log In</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

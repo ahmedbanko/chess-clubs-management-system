@@ -1,0 +1,32 @@
+{% load humanize %}
+<a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#application-{{ application.id }}"
+   class="list-group-item list-group-item-action">
+    {{ application.user.full_name }}
+    <div style="float: right;">{{ application.created_at|naturaltime }}</div>
+</a>
+
+<!-- Modal -->
+<div class="modal fade" id="application-{{ application.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{ application.user }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'partials/application.html' with application=application %}
+            </div>
+            <div class="modal-footer">
+                <form action="{% url 'reject_application' club_id application.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="sumbit" class="btn btn-danger">Reject</button>
+                </form>
+                <form action="{% url 'accept_application' club_id application.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="sumbit" class="btn btn-success">Accept</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

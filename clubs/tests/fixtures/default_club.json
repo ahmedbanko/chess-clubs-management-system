@@ -1,0 +1,12 @@
+[
+    {
+      "model": "clubs.club",
+      "pk": 1,
+      "fields": {
+            "name": "PolecatChess",
+            "location": "London",
+            "description": "Welcome to Polecat chess club!"
+        }
+    }
+]
+  

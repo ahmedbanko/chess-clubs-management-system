@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% include 'partials/navbar.html' %}
+    <div class="col-sm-12 col-md-6 offset-md-3">
+        {% include 'partials/messages.html' %}
+    </div>
+    <div class="px-3 pt-1 my-1 text-center border-bottom">
+        <div class="col-lg-8 mx-auto">
+            {% include 'partials/club_dropbox.html' with display_big=True %}
+        </div>
+        <h1 class="display-6 fw-bold">Welcome to {{ club.name }} </h1>
+        <div class="col-lg-6 mx-auto lead">
+            <p class="lead mb-4">
+                {% if club.description|length >= 100 %}
+                    {{ club.description|truncatechars:300 }}
+                    {% include 'partials/club_description_modal.html' with club=club %}
+                {% else %}
+                    {{ club.description }}
+                {% endif %}
+            <div class="d-flex mb-2 text-center justify-content-center">
+                <span class="text-muted border-end px-2"> Owner {{ club.get_owner.full_name }} </span>
+                <span class="text-muted border-end px-2">{{ club.get_member_count }} Members </span>
+                <span class="text-muted px-2"> Located at {{ club.location }} </span>
+            </div>
+            </p>
+        </div>
+    </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 offset-md-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="matches">
+                <div class="d-flex align-items-center mt-3">
+                    <h4>Matches</h4>
+                    <span class="d-inline-block ms-1 mb-1" tabindex="0" data-bs-toggle="popover"
+                          data-bs-trigger="hover focus"
+                          data-bs-content="Contact an officer to schedule an event">
+                <i class="far fa-question-circle"></i>
+            </span>
+                </div>
+            </div>
+            {% if logged_in_user_is_officer %}
+                <a href="{% url 'create_match' club.id %}" class="btn btn-primary" style="float: right;"><i
+                        class="fas fa-plus me-2"></i>New match</a>
+            {% endif %}
+        </div>
+        <input type="search" id="search-input" class="form-control m-2 mb-3" placeholder="Find a match"/>
+        <p class="text-danger" id="message" hidden>No match for the entered name!</p>
+        <div class="squish mx-auto">
+            {% include 'partials/club_match_list.html' %}
+        </div>
+    </div>
+
+
+
+    <script>
+        const searchButton = document.getElementById('search-button');
+        const searchInput = document.getElementById('search-input');
+        const message = document.getElementById('message');
+        var listRows = document.getElementsByClassName("match")
+        var found = false;
+
+        // Action taken when search input changes.
+        searchInput.addEventListener('input', () => {
+            found = false;
+            message.hidden = true;
+            reloadTable();
+            const inputValue = searchInput.value.toLowerCase();
+            for (row of listRows) {
+                const players = row.id.toLowerCase().split(",");
+                var player_1_name = players[0]
+                var player_2_name = players[1]
+                if (!player_1_name.startsWith(inputValue) && !player_2_name.startsWith(inputValue)) {
+                    row.hidden = true;
+                } else {
+                    found = true;
+                }
+            }
+            if (!found) {
+                message.hidden = false;
+            }
+        });
+
+        function reloadTable() {
+            for (row of listRows) {
+                row.hidden = false;
+            }
+        }
+    </script>
+{% endblock %}

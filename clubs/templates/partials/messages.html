@@ -1,0 +1,16 @@
+<div id="messages-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.level_tag }} text-center" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<script>
+    var messages_container = document.getElementById("messages-container");
+    setTimeout(function () {
+        messages_container.style.display = "none";
+    }, 6000);
+</script>
